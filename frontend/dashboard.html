@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FlashAI Dashboard</title>
+    <link rel="stylesheet" href="static/styles/style.css" />
+</head>
+<body>
+    <header class="hero hero-dashboard">
+        <div class="hero-content">
+            <div class="hero-row">
+                <div>
+                    <h1>FlashAI Dashboard</h1>
+                    <p>Resume matching insights with live job and candidate scoring.</p>
+                </div>
+                <div class="hero-actions">
+                    <span id="userName" class="user-badge"></span>
+                    <button id="logoutBtn" class="button button-secondary">Logout</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container dashboard-container">
+        <section class="panel dashboard-panel status-panel">
+            <div class="status-item">
+                <h3 id="jobCount">0</h3>
+                <p>Job Descriptions</p>
+            </div>
+            <div class="status-item">
+                <h3 id="candidateCount">0</h3>
+                <p>Total Candidates</p>
+            </div>
+            <div class="status-item">
+                <h3 id="refreshTime">-</h3>
+                <p>Last Updated</p>
+            </div>
+            <button id="refreshBtn" class="button button-primary">Refresh Matches</button>
+        </section>
+
+        <section class="panel dashboard-panel search-panel">
+            <div class="panel-header">
+                <h2>Find a Role</h2>
+                <input id="searchInput" type="search" placeholder="Search by company or role..." />
+            </div>
+
+            <div id="jobContainer"></div>
+        </section>
+
+        <section class="panel dashboard-panel results-panel">
+            <div class="panel-header">
+                <h2>Top Candidates</h2>
+                <p>Sorted by match score with each job.</p>
+            </div>
+            <div id="resultsContainer"></div>
+        </section>
+    </main>
+
+    <script src="static/scripts/dashboard.js"></script>
+</body>
+</html>

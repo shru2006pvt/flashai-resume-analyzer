@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analysis Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}" />
+  </head>
+  <body>
+    <header class="hero-header small">
+      <div class="brand">
+        <h1>Resume Analysis Report</h1>
+        <p>Review score breakdown and suggestions for improvement.</p>
+      </div>
+      <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+      </nav>
+    </header>
+
+    <main class="results-grid">
+      <section class="panel result-summary">
+        <div class="score-badge">
+          <span>{{ record.overall_score }}%</span>
+        </div>
+        <div>
+          <h2>{{ record.candidate_name }}</h2>
+          <p>Fit level: <strong>{{ record.fit_level }}</strong></p>
+          <p>Created: {{ record.created_at[:19].replace('T',' ') }}</p>
+        </div>
+      </section>
+
+      <section class="panel results-breakdown">
+        <h3>Score Breakdown</h3>
+        <div class="progress-item">
+          <label>Semantic Similarity</label>
+          <div class="progress-bar"><span style="width: {{ record.features.semantic_similarity * 100 }}%"></span></div>
+          <span>{{ record.features.semantic_similarity * 100 | round(0) }}%</span>
+        </div>
+        <div class="progress-item">
+          <label>Skill Match</label>
+          <div class="progress-bar"><span style="width: {{ record.features.skill_match * 100 }}%"></span></div>
+          <span>{{ record.features.skill_match * 100 | round(0) }}%</span>
+        </div>
+        <div class="progress-item">
+          <label>Experience</label>
+          <div class="progress-bar"><span style="width: {{ record.features.experience * 100 }}%"></span></div>
+          <span>{{ record.features.experience * 100 | round(0) }}%</span>
+        </div>
+        <div class="progress-item">
+          <label>Education</label>
+          <div class="progress-bar"><span style="width: {{ record.features.education * 100 }}%"></span></div>
+          <span>{{ record.features.education * 100 | round(0) }}%</span>
+        </div>
+        <div class="progress-item">
+          <label>Project</label>
+          <div class="progress-bar"><span style="width: {{ record.features.project * 100 }}%"></span></div>
+          <span>{{ record.features.project * 100 | round(0) }}%</span>
+        </div>
+        <div class="progress-item">
+          <label>ATS Compatibility</label>
+          <div class="progress-bar"><span style="width: {{ record.features.ats * 100 }}%"></span></div>
+          <span>{{ record.features.ats * 100 | round(0) }}%</span>
+        </div>
+      </section>
+
+      <section class="panel suggestions-panel">
+        <h3>AI Suggestions</h3>
+        <div class="suggestion-card">
+          <h4>Matched Skills</h4>
+          {% if record.features.matched_skills %}
+          <p>{{ record.features.matched_skills | join(', ') }}</p>
+          {% else %}
+          <p>No direct matches found.</p>
+          {% endif %}
+        </div>
+
+        <div class="suggestion-card">
+          <h4>Missing Important Skills</h4>
+          {% if record.features.missing_skills %}
+          <p>{{ record.features.missing_skills | join(', ') }}</p>
+          {% else %}
+          <p>Resume already includes the key skills from this JD.</p>
+          {% endif %}
+        </div>
+
+        <div class="suggestion-card">
+          <h4>Action Verbs</h4>
+          <p>{{ record.suggestions.strong_action_verbs | join(', ') }}</p>
+        </div>
+
+        <div class="suggestion-card">
+          <h4>Resume Strengths</h4>
+          <ul>
+            <li>{{ record.details.years_experience }} years of experience detected</li>
+            <li>{{ record.details.resume_skill_count }} skills extracted</li>
+            <li>{{ record.details.resume_sections | join(', ') }}</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

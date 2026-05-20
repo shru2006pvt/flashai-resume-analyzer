@@ -1,0 +1,25 @@
+{
+    "pyhton": "python",
+    "python": "python",
+
+    "machine learning": "machine_learning",
+    "machine-learning": "machine_learning",
+
+    "deep learning": "deep_learning",
+    "deep-learning": "deep_learning",
+
+    "tensorflow": "tensorflow",
+    "nlp": "nlp",
+    "sql": "sql",
+    "pandas": "pandas",
+
+    "data analysis": "data_analysis",
+
+    "javascript": "javascript",
+    "html": "html",
+    "css": "css",
+    "react": "react",
+
+    "node.js": "nodejs",
+    "nodejs": "nodejs"
+}

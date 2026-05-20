@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resume AI Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}" />
+  </head>
+  <body>
+    <header class="hero-header">
+      <div class="brand">
+        <h1>Resume AI Analyzer</h1>
+        <p>Upload resumes, analyze job fit, compare candidates, and get AI-driven hiring insights.</p>
+      </div>
+      <nav>
+        {% if authenticated %}
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+        {% else %}
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('signup') }}">Sign Up</a>
+        {% endif %}
+      </nav>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <section class="flash-panel">
+      {% for category, message in messages %}
+      <div class="flash-message flash-{{ category }}">{{ message }}</div>
+      {% endfor %}
+    </section>
+    {% endif %}
+    {% endwith %}
+
+    <main class="page-grid">
+      <section class="panel">
+        <h2>Analyze a Resume</h2>
+        <form id="analyze-form">
+          <label for="candidate_name">Candidate Name</label>
+          <input id="candidate_name" name="candidate_name" placeholder="Jane Doe" />
+
+          <label for="resume">Resume File</label>
+          <input id="resume" name="resume" type="file" accept=".pdf,.docx,.txt" required />
+
+          <label for="jd_text">Job Description</label>
+          <textarea id="jd_text" name="jd_text" rows="8" placeholder="Paste the job description here..."></textarea>
+
+          <label for="jd_file">Or upload a JD file</label>
+          <input id="jd_file" name="jd_file" type="file" accept=".pdf,.docx,.txt" />
+
+          <button type="submit" class="primary-btn">Run Analysis</button>
+          <div class="status" id="analysis-status"></div>
+        </form>
+      </section>
+
+      <section class="panel info-panel">
+        <h2>Features Included</h2>
+        <ul>
+          <li>PDF / DOCX / TXT resume upload</li>
+          <li>Semantic similarity with sentence embeddings</li>
+          <li>Skill extraction and missing skill feedback</li>
+          <li>Experience, education, project and ATS scoring</li>
+          <li>Candidate ranking and recruiter dashboard</li>
+          <li>Simple login/signup and stored reports</li>
+        </ul>
+      </section>
+
+      <section class="panel">
+        <h2>Compare Multiple Resumes</h2>
+        <form id="compare-form">
+          <label for="compare_jd_text">Job Description</label>
+          <textarea id="compare_jd_text" name="jd_text" rows="6" placeholder="Paste the job description here..." required></textarea>
+
+          <label for="candidate_names">Candidate Names (comma-separated)</label>
+          <input id="candidate_names" name="candidate_names" placeholder="Alice, Bob, Charlie" />
+
+          <label for="resumes">Resume Files</label>
+          <input id="resumes" name="resumes" type="file" accept=".pdf,.docx,.txt" multiple required />
+
+          <button type="submit" class="primary-btn">Compare Resumes</button>
+          <div class="status" id="compare-status"></div>
+        </form>
+      </section>
+    </main>
+
+    <section class="cta-panel">
+      <h3>Want to compare multiple resumes?</h3>
+      <p>Upload several resumes and one JD to rank candidates automatically.</p>
+    </section>
+
+    <script src="{{ url_for('static', filename='scripts/app.js') }}"></script>
+  </body>
+</html>

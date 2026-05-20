@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recruiter Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}" />
+  </head>
+  <body>
+    <header class="hero-header">
+      <div class="brand">
+        <h1>Recruiter Dashboard</h1>
+        <p>Manage candidate reports, review match scores, and search stored analyses.</p>
+      </div>
+      <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+      </nav>
+    </header>
+
+    <main class="dashboard-grid">
+      <section class="panel dashboard-summary">
+        <h2>Stored Candidates</h2>
+        <p>Total candidates: {{ records|length }}</p>
+      </section>
+
+      <section class="panel records-panel">
+        {% if records and records|length > 0 %}
+        <table>
+          <thead>
+            <tr>
+              <th>Candidate</th>
+              <th>Score</th>
+              <th>Fit</th>
+              <th>Created At</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for record in records %}
+            <tr>
+              <td>{{ record['candidate_name'] }}</td>
+              <td>{{ record['overall_score'] }}%</td>
+              <td>{{ record['fit_level'] }}</td>
+              <td>{{ record['created_at'][:19].replace('T',' ') }}</td>
+              <td><a href="{{ url_for('results', analysis_id=record['id']) }}">View</a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+        <div class="empty-state">
+          <p>No candidate reports saved yet. Upload a resume on the home page to begin.</p>
+        </div>
+        {% endif %}
+      </section>
+    </main>
+  </body>
+</html>
